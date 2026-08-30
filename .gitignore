@@ -1,0 +1,7 @@
+node_modules/
+.venv/
+.venv-1/
+.ideav/
+.idea/
+__pycache__/
+.env/

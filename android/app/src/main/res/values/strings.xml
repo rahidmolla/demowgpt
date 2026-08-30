@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">demo.wgpt</string>
+    <string name="title_activity_main">demo.wgpt</string>
+    <string name="package_name">com.molla.wgpt</string>
+    <string name="custom_url_scheme">com.molla.wgpt</string>
+</resources>

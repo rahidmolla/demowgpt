@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Weather Alerts - WeatherGPT</title>
+
+    <link
+        rel="stylesheet"
+        href="alerts.css"
+    >
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <header class="alerts-header">
+
+        <button
+            onclick="goHome()"
+            class="back-btn"
+        >
+            ←
+        </button>
+
+        <div>
+            <h1>Weather Alerts</h1>
+
+            <p>Important weather information</p>
+        </div>
+
+    </header>
+
+
+    <!-- ALERT STATUS -->
+
+    <section class="alert-status">
+
+        <div class="status-icon">
+            ⚠️
+        </div>
+
+        <div>
+            <h2>Stay Weather Aware</h2>
+
+            <p>
+                Check alerts before making outdoor plans.
+            </p>
+        </div>
+
+    </section>
+
+
+    <!-- ALERTS -->
+
+    <section class="alerts-list">
+
+        <h2>Current Alerts</h2>
+
+        <!-- JavaScript will add real alerts here -->
+
+        <div id="alertsContainer"></div>
+
+    </section>
+
+
+    <!-- NO MORE -->
+
+    <div class="all-clear">
+
+        <span>✓</span>
+
+        <p>
+            No other major alerts at this time.
+        </p>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="bottom-nav">
+
+        <button onclick="goHome()">
+
+            <span>🏠</span>
+
+            <small>Home</small>
+
+        </button>
+
+        <button onclick="goForecast()">
+
+            <span>📅</span>
+
+            <small>Forecast</small>
+
+        </button>
+
+        <button class="active">
+
+            <span>⚠️</span>
+
+            <small>Alerts</small>
+
+        </button>
+
+    </nav>
+
+</div>
+
+
+<script src="alerts.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>WeatherGPT</title>
+
+    <link rel="stylesheet" href="home.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <header class="top-bar">
+
+        <div>
+            <h1>WeatherGPT</h1>
+            <p>Your AI Weather Assistant</p>
+        </div>
+
+        <button id="logoutBtn" class="logout-btn">
+            ↪
+        </button>
+
+    </header>
+
+
+    <!-- LOCATION -->
+
+    <section class="location-card">
+
+        <div>
+            <span class="location-icon">📍</span>
+
+            <div>
+                <p class="small-text">Current Location</p>
+
+                <h2 id="cityName">
+                    Kolkata
+                </h2>
+            </div>
+        </div>
+
+        <button id="changeLocation">
+            Change
+        </button>
+
+    </section>
+
+
+    <!-- WEATHER -->
+
+    <section class="weather-card">
+
+        <div class="weather-main">
+
+            <div>
+                <p id="weather-condition" class="weather-condition">
+                    Partly Cloudy
+                </p>
+
+                <h2>
+                    <span id="temperature">
+                        31
+                    </span>°C
+                </h2>
+
+                <p id="feelsLike">
+                    Feels like 34°C
+                </p>
+            </div>
+
+            <div class="weather-icon">
+                ⛅
+            </div>
+
+        </div>
+
+
+        <div class="weather-details">
+
+            <div>
+                <span>💧</span>
+                <p id="humidity">Humidity</p>
+                <strong>74%</strong>
+            </div>
+
+            <div>
+                <span>💨</span>
+                <p id="windSpeed">Wind</p>
+                <strong>14 km/h</strong>
+            </div>
+
+            <div>
+                <span>🌧️</span>
+                <p>Rain</p>
+                <strong>40%</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <section class="quick-actions">
+
+        <button onclick="openForecast()">
+            <span>📅</span>
+            <p>10 Day Forecast</p>
+        </button>
+
+        <button onclick="openAlerts()">
+            <span>⚠️</span>
+            <p>Weather Alerts</p>
+        </button>
+
+    </section>
+
+
+    <!-- AI CHAT -->
+
+    <section class="chat-section">
+
+        <div class="section-title">
+
+            <div>
+                <h2>Ask WeatherGPT</h2>
+
+                <p>
+                    Ask anything about the weather
+                </p>
+            </div>
+
+            <span>🤖</span>
+
+        </div>
+
+
+        <div id="chatBox" class="chat-box">
+
+            <div class="message bot-message">
+
+                <div class="avatar">
+                    🤖
+                </div>
+
+                <div class="message-content">
+
+                    <p>
+                        Hi! I'm WeatherGPT 👋
+                    </p>
+
+                    <p>
+                        Ask me about today's weather,
+                        rain, temperature or outdoor plans.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHAT INPUT -->
+
+        <div class="chat-input-area">
+
+            <input
+                type="text"
+                id="messageInput"
+                placeholder="Ask WeatherGPT..."
+            >
+
+            <button
+                id="micBtn"
+                class="mic-btn"
+                title="Voice input"
+            >
+                🎤
+            </button>
+
+            <button
+                id="sendBtn"
+                class="send-btn"
+            >
+                ➤
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <nav class="bottom-nav">
+
+        <button class="active">
+            <span>🏠</span>
+            <small>Home</small>
+        </button>
+
+        <button onclick="openForecast()">
+            <span>📅</span>
+            <small>Forecast</small>
+        </button>
+
+        <button onclick="openAlerts()">
+            <span>⚠️</span>
+            <small>Alerts</small>
+        </button>
+
+        <button onclick="openProfile()">
+    <span>👤</span>
+    <small>Profile</small>
+</button>
+
+    </nav>
+
+</div>
+
+
+<script src="home.js"></script>
+
+</body>
+
+</html>
