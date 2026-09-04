@@ -1,16 +1,16 @@
+// ===============================
+// WeatherGPT - Forecast Page
+// ===============================
+
+
+// ---------- NAVIGATION ----------
+console.log("new forecast is loaded");
 function goHome() {
-
-    window.location.href =
-        "home.html";
-
+    window.location.href = "home.html";
 }
 
-
 function goAlerts() {
-
-    window.location.href =
-        "alerts.html";
-
+    window.location.href = "alerts.html";
 }
 
 function goProfile() {
@@ -18,12 +18,11 @@ function goProfile() {
 }
 
 
-/* WEATHER ICON */
+// ---------- WEATHER ICON ----------
 
 function getWeatherIcon(condition) {
 
     const icons = {
-
         "Clear": "☀️",
         "Clouds": "☁️",
         "Rain": "🌧️",
@@ -32,205 +31,253 @@ function getWeatherIcon(condition) {
         "Fog": "🌫️",
         "Snow": "❄️",
         "Thunderstorm": "⛈️"
-
     };
 
     return icons[condition] || "🌤️";
-
 }
 
 
-/* LOAD FORECAST */
+// ---------- DATE FORMAT ----------
+
+function formatDate(dateString) {
+
+    const date = new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+        return dateString;
+    }
+
+    return date.toLocaleDateString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric"
+    });
+}
+
+
+// ---------- LOAD FORECAST ----------
 
 async function loadForecast(city) {
 
+    console.log("Loading forecast for:", city);
+
+    const container = document.getElementById("forecastContainer");
+
+    // Show loading message
+    if (container) {
+        container.innerHTML = `
+            <p style="text-align:center; padding:20px;">
+                Loading forecast...
+            </p>
+        `;
+    }
+
     try {
 
+        // Connect to backend
         const response = await fetch(
-
-            "http://127.0.0.1:8000/api/forecast/",
-
+            "https://demowgpt.onrender.com/api/forecast/",
             {
-
                 method: "POST",
 
                 headers: {
-
                     "Content-Type": "application/json"
-
                 },
 
                 body: JSON.stringify({
-
                     city: city
-
                 })
-
             }
-
         );
 
 
-        const result =
-            await response.json();
+        // Convert response to JSON
+        const result = await response.json();
 
 
+        // Check API response
         if (!response.ok) {
 
             throw new Error(
-                result.detail ||
-                "Unable to load forecast"
+                result.detail || "Unable to load forecast"
             );
-
         }
 
 
-        const data =
-            result.data;
+        // Backend returns data inside result.data
+        const data = result.data;
 
 
-        /* UPDATE CITY */
-
-        document
-            .getElementById("forecastCity")
-            .textContent =
-            `📍 ${data.city}`;
+        console.log("Forecast API response:", data);
 
 
-        /* FIRST DAY SUMMARY */
+        // ---------- UPDATE CITY ----------
 
-        const today =
-            data.forecast[0];
+        const cityElement =
+            document.getElementById("forecastCity");
 
+        if (cityElement) {
 
-        document
-            .getElementById("forecastTemperature")
-            .textContent =
-            `${today.max_temp}°C`;
-
-
-        document
-            .getElementById("forecastCondition")
-            .textContent =
-            `${today.description} ${getWeatherIcon(today.condition)}`;
+            cityElement.textContent =
+                `📍 ${data.city}`;
+        }
 
 
-        /* FORECAST LIST */
+        // ---------- CHECK FORECAST DATA ----------
 
-        const container =
+        if (
+            !data.forecast ||
+            !Array.isArray(data.forecast) ||
+            data.forecast.length === 0
+        ) {
+
+            throw new Error(
+                "No forecast data received from server"
+            );
+        }
+
+
+        // ---------- TODAY ----------
+
+        const today = data.forecast[0];
+
+
+        // Support the new ID
+        const todayTemperature =
             document.getElementById(
-                "forecastContainer"
+                "forecastTodayTemperature"
             );
 
 
+        // Also support the old ID if it still exists
+        const oldTemperature =
+            document.getElementById(
+                "forecastTemperature"
+            );
+
+
+        if (todayTemperature) {
+
+            todayTemperature.textContent =
+                `${today.max_temp}°C`;
+
+        } else if (oldTemperature) {
+
+            oldTemperature.textContent =
+                `${today.max_temp}°C`;
+        }
+
+
+        // ---------- TODAY CONDITION ----------
+
+        const conditionElement =
+            document.getElementById(
+                "forecastCondition"
+            );
+
+
+        if (conditionElement) {
+
+            conditionElement.textContent =
+                `${today.description} ${getWeatherIcon(today.condition)}`;
+        }
+
+
+        // ---------- TODAY ICON ----------
+
+        const todayIcon =
+            document.getElementById(
+                "forecastTodayIcon"
+            );
+
+
+        if (todayIcon) {
+
+            todayIcon.textContent =
+                getWeatherIcon(today.condition);
+        }
+
+
+        // ---------- FORECAST CONTAINER ----------
+
+        if (!container) {
+
+            throw new Error(
+                "forecastContainer was not found in forecast.html"
+            );
+        }
+
+
+        // Clear loading message
         container.innerHTML = "";
 
 
-        data.forecast.forEach(
+        // ---------- CREATE FORECAST CARDS ----------
 
-            (day, index) => {
+        data.forecast.forEach((day, index) => {
 
-                const date =
-                    new Date(day.date);
+            const card =
+                document.createElement("div");
 
-
-                const dayName =
-
-                    index === 0
-
-                        ? "Today"
-
-                        : date.toLocaleDateString(
-
-                            "en-US",
-
-                            {
-
-                                weekday: "short"
-
-                            }
-
-                        );
+            card.className = "forecast-day";
 
 
-                const formattedDate =
-
-                    date.toLocaleDateString(
-
-                        "en-US",
-
-                        {
-
-                            month: "short",
-
-                            day: "numeric"
-
-                        }
-
-                    );
+            // First day = Today
+            const dayName =
+                index === 0
+                    ? "Today"
+                    : formatDate(day.date);
 
 
-                const icon =
-                    getWeatherIcon(
-                        day.condition
-                    );
+            card.innerHTML = `
+                <div class="forecast-day-info">
+
+                    <h3>${dayName}</h3>
+
+                    <span>
+                        ${day.description || day.condition}
+                    </span>
+
+                </div>
 
 
-                const forecastHTML = `
+                <div class="forecast-day-icon">
 
-                    <div class="forecast-day">
+                    ${getWeatherIcon(day.condition)}
 
-                        <div class="day">
-
-                            <strong>
-                                ${dayName}
-                            </strong>
-
-                            <small>
-                                ${formattedDate}
-                            </small>
-
-                        </div>
+                </div>
 
 
-                        <div class="forecast-icon">
+                <div class="forecast-day-temp">
 
-                            ${icon}
+                    <strong>
+                        ${day.max_temp}°C
+                    </strong>
 
-                        </div>
+                    <span>
+                        ${day.min_temp}°C
+                    </span>
 
-
-                        <div class="condition">
-
-                            ${day.description}
-
-                        </div>
-
-
-                        <div class="temps">
-
-                            <strong>
-                                ${day.max_temp}°
-                            </strong>
-
-                            <span>
-                                ${day.min_temp}°
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                `;
+                </div>
 
 
-                container.innerHTML +=
-                    forecastHTML;
+                <div class="forecast-day-rain">
 
-            }
+                    💧 ${day.rain_probability}%
 
+                </div>
+            `;
+
+
+            container.appendChild(card);
+
+        });
+
+
+        console.log(
+            "Forecast loaded successfully for:",
+            data.city
         );
-
 
     } catch (error) {
 
@@ -239,17 +286,30 @@ async function loadForecast(city) {
             error
         );
 
-    }
 
+        if (container) {
+
+            container.innerHTML = `
+                <p style="
+                    text-align:center;
+                    padding:20px;
+                    color:#d9534f;
+                ">
+                    Unable to load forecast.
+                    <br>
+                    Please make sure the backend is running.
+                </p>
+            `;
+        }
+    }
 }
 
 
-/* GET SELECTED CITY */
+// ---------- GET SELECTED CITY FROM HOME ----------
 
 const selectedCity =
-    localStorage.getItem(
-        "selectedCity"
-    ) || "Kolkata";
+    localStorage.getItem("selectedCity") ||
+    "Kolkata";
 
 
 console.log(
@@ -258,8 +318,32 @@ console.log(
 );
 
 
-/* LOAD FORECAST */
+// ---------- START FORECAST ----------
 
-loadForecast(
-    selectedCity
-);
+loadForecast(selectedCity);
+
+
+// ---------- CHANGE LOCATION FROM THIS PAGE ----------
+// Tapping the city label lets you change location right here,
+// and it stays in sync with home.html (same "selectedCity" key).
+
+const forecastCityLabel =
+    document.getElementById("forecastCity");
+
+if (forecastCityLabel) {
+
+    forecastCityLabel.addEventListener("click", () => {
+
+        const newCity = prompt("Enter a city name:");
+
+        if (newCity && newCity.trim() !== "") {
+
+            localStorage.setItem(
+                "selectedCity",
+                newCity.trim()
+            );
+
+            loadForecast(newCity.trim());
+        }
+    });
+}

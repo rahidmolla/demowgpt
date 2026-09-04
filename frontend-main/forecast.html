@@ -37,7 +37,7 @@
         <div>
             <h1>10 Day Forecast</h1>
 
-            <p id="forecastCity">📍 Kolkata</p>
+            <p id="forecastCity" title="Tap to change location" style="cursor:pointer; text-decoration:underline;">📍 Loading...</p>
         </div>
 
     </header>
@@ -49,15 +49,15 @@
 
         <div>
 
-            <p>Today</p>
+            <p id="todayLabel">Today</p>
 
-            <h2>31°C</h2>
+            <h2 id="forecastTodayTemperature">--°C</h2>
 
-            <span id="forecastCondition">Partly Cloudy ⛅</span>
+            <span id="forecastCondition">Loading...</span>
 
         </div>
 
-        <div class="big-icon">
+        <div class="big-icon" id="forecastTodayIcon">
             ⛅
         </div>
 
@@ -69,237 +69,14 @@
     <section class="forecast-list">
 
         <div class="forecast-title">
-            <h2 id="forecastTemperature">Upcoming Days</h2>
+            <h2>Upcoming Days</h2>
         </div>
 
-
-        <div class="forecast-day">
-
-            <div class="day">
-                <strong>Today</strong>
-                <small>Aug 28</small>
-            </div>
-
-            <div class="forecast-icon">
-                ⛅
-            </div>
-
-            <div class="condition">
-                Partly Cloudy
-            </div>
-
-            <div class="temps">
-                <strong>31°</strong>
-                <span>25°</span>
-            </div>
-
-        </div>
-
-
-        <div class="forecast-day">
-
-            <div class="day">
-                <strong>Sat</strong>
-                <small>Aug 29</small>
-            </div>
-
-            <div class="forecast-icon">
-                🌧️
-            </div>
-
-            <div class="condition">
-                Rainy
-            </div>
-
-            <div class="temps">
-                <strong>30°</strong>
-                <span>24°</span>
-            </div>
-
-        </div>
-
-
-        <div class="forecast-day">
-
-            <div class="day">
-                <strong>Sun</strong>
-                <small>Aug 30</small>
-            </div>
-
-            <div class="forecast-icon">
-                🌦️
-            </div>
-
-            <div class="condition">
-                Showers
-            </div>
-
-            <div class="temps">
-                <strong>30°</strong>
-                <span>25°</span>
-            </div>
-
-        </div>
-
-
-        <div class="forecast-day">
-
-            <div class="day">
-                <strong>Mon</strong>
-                <small>Aug 31</small>
-            </div>
-
-            <div class="forecast-icon">
-                ☁️
-            </div>
-
-            <div class="condition">
-                Cloudy
-            </div>
-
-            <div class="temps">
-                <strong>31°</strong>
-                <span>25°</span>
-            </div>
-
-        </div>
-
-
-        <div class="forecast-day">
-
-            <div class="day">
-                <strong>Tue</strong>
-                <small>Sep 1</small>
-            </div>
-
-            <div class="forecast-icon">
-                🌤️
-            </div>
-
-            <div class="condition">
-                Mostly Sunny
-            </div>
-
-            <div class="temps">
-                <strong>32°</strong>
-                <span>25°</span>
-            </div>
-
-        </div>
-
-
-        <div class="forecast-day">
-
-            <div class="day">
-                <strong>Wed</strong>
-                <small>Sep 2</small>
-            </div>
-
-            <div class="forecast-icon">
-                🌦️
-            </div>
-
-            <div class="condition">
-                Light Rain
-            </div>
-
-            <div class="temps">
-                <strong>30°</strong>
-                <span>24°</span>
-            </div>
-
-        </div>
-
-
-        <div class="forecast-day">
-
-            <div class="day">
-                <strong>Thu</strong>
-                <small>Sep 3</small>
-            </div>
-
-            <div class="forecast-icon">
-                ⛅
-            </div>
-
-            <div class="condition">
-                Partly Cloudy
-            </div>
-
-            <div class="temps">
-                <strong>31°</strong>
-                <span>25°</span>
-            </div>
-
-        </div>
-
-
-        <div class="forecast-day">
-
-            <div class="day">
-                <strong>Fri</strong>
-                <small>Sep 4</small>
-            </div>
-
-            <div class="forecast-icon">
-                🌧️
-            </div>
-
-            <div class="condition">
-                Rainy
-            </div>
-
-            <div class="temps">
-                <strong>29°</strong>
-                <span>24°</span>
-            </div>
-
-        </div>
-
-
-        <div class="forecast-day">
-
-            <div class="day">
-                <strong>Sat</strong>
-                <small>Sep 5</small>
-            </div>
-
-            <div class="forecast-icon">
-                ☁️
-            </div>
-
-            <div class="condition">
-                Cloudy
-            </div>
-
-            <div class="temps">
-                <strong>30°</strong>
-                <span>24°</span>
-            </div>
-
-        </div>
-
-
-        <div class="forecast-day">
-
-            <div class="day">
-                <strong>Sun</strong>
-                <small>Sep 6</small>
-            </div>
-
-            <div class="forecast-icon">
-                🌤️
-            </div>
-
-            <div class="condition">
-                Mostly Sunny
-            </div>
-
-            <div class="temps">
-                <strong>32°</strong>
-                <span>25°</span>
-            </div>
-
+        <!-- Forecast day cards are inserted here dynamically by forecast.js -->
+        <div id="forecastContainer">
+            <p id="forecastStatus" style="text-align:center; color:#888; padding:20px 0;">
+                Loading forecast...
+            </p>
         </div>
 
     </section>

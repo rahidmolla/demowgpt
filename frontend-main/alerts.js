@@ -1,52 +1,133 @@
+/* =========================================================
+   WEATHERGPT - ALERTS PAGE
+   ========================================================= */
+
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
 function goHome() {
-
-    window.location.href =
-        "home.html";
-
+    window.location.href = "home.html";
 }
 
 
 function goForecast() {
+    window.location.href = "forecast.html";
+}
 
-    window.location.href =
-        "forecast.html";
 
- }
-
- function goProfile() {
+function goProfile() {
     window.location.href = "profile.html";
 }
 
 
-/* GET ALERT ICON */
+/* =========================================================
+   GET ALERT ICON
+   ========================================================= */
 
 function getAlertIcon(type) {
 
     const icons = {
 
         "Normal": "✅",
+
         "Rain": "🌧️",
+
         "Thunderstorm": "⛈️",
-        "Wind": "💨",
-        "Heat": "☀️",
+
+        "Strong Wind": "💨",
+
+        "Extreme Heat": "☀️",
+
         "Cold": "🥶"
 
     };
 
     return icons[type] || "⚠️";
-
 }
 
 
-/* LOAD ALERTS */
+/* =========================================================
+   GET ALERT CARD CLASS
+   ========================================================= */
 
-async function loadAlerts(city = "Kolkata") {
+function getAlertClass(severity) {
+
+    if (severity === "High" || severity === "Critical") {
+        return "caution";
+    }
+
+    if (severity === "Moderate") {
+        return "warning";
+    }
+
+    return "information";
+}
+
+
+/* =========================================================
+   LOAD ALERTS
+   ========================================================= */
+
+async function loadAlerts(city) {
+
+    const container =
+        document.getElementById("alertsContainer");
+
+
+    /* Safety check */
+
+    if (!container) {
+
+        console.error(
+            "alertsContainer was not found in alerts.html"
+        );
+
+        return;
+    }
+
+
+    /* -----------------------------------------
+       GET SELECTED CITY FROM HOME PAGE
+       ----------------------------------------- */
+
+    const selectedCity =
+        city ||
+        localStorage.getItem("selectedCity") ||
+        "Kolkata";
+
+
+    console.log(
+        "Selected city for alerts:",
+        selectedCity
+    );
+
+
+    /* Show loading message */
+
+    container.innerHTML = `
+        <p
+            style="
+                text-align:center;
+                color:#888;
+                padding:20px 0;
+            "
+        >
+            Loading weather alerts...
+        </p>
+    `;
+
 
     try {
 
+        /* -----------------------------------------
+           CALL BACKEND
+           ----------------------------------------- */
+
         const response = await fetch(
 
-            "http://127.0.0.1:8000/api/alerts/",
+            "https://demowgpt.onrender.com/api/alerts/",
 
             {
 
@@ -54,13 +135,14 @@ async function loadAlerts(city = "Kolkata") {
 
                 headers: {
 
-                    "Content-Type": "application/json"
+                    "Content-Type":
+                        "application/json"
 
                 },
 
                 body: JSON.stringify({
 
-                    city: city
+                    city: selectedCity
 
                 })
 
@@ -69,89 +151,199 @@ async function loadAlerts(city = "Kolkata") {
         );
 
 
-        const data = await response.json();
+        /* -----------------------------------------
+           READ RESPONSE
+           ----------------------------------------- */
 
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Alerts API response:",
+            data
+        );
+
+
+        /* -----------------------------------------
+           HANDLE BACKEND ERROR
+           ----------------------------------------- */
 
         if (!response.ok) {
 
-            throw new Error(data.detail);
+            throw new Error(
+
+                data.detail ||
+                "Unable to load weather alerts"
+
+            );
 
         }
 
 
-        const container =
-
-            document.getElementById(
-                "alertsContainer"
-            );
-
+        /* -----------------------------------------
+           CLEAR LOADING MESSAGE
+           ----------------------------------------- */
 
         container.innerHTML = "";
 
 
-        data.alerts.forEach(
+        /* -----------------------------------------
+           CHECK ALERT DATA
+           ----------------------------------------- */
 
-            (alert) => {
-
-                const icon =
-
-                    getAlertIcon(
-                        alert.type
-                    );
-
-
-                const alertHTML = `
-
-                    <div class="alert-card information">
-
-                        <div class="alert-icon">
-
-                            ${icon}
-
-                        </div>
+        const alerts =
+            Array.isArray(data.alerts)
+                ? data.alerts
+                : [];
 
 
-                        <div class="alert-content">
+        /* =================================================
+           NO ALERTS
+           ================================================= */
 
-                            <div class="alert-heading">
+        if (alerts.length === 0) {
 
-                                <h3>
-                                    ${alert.type}
-                                </h3>
+            container.innerHTML = `
 
-                                <span>
-                                    ${alert.severity}
-                                </span>
+                <div
+                    class="all-clear"
+                    style="margin:0 0 12px 0;"
+                >
 
-                            </div>
+                    <span>✓</span>
+
+                    <p>
+                        No major weather alerts for
+                        ${selectedCity}.
+                    </p>
+
+                </div>
+
+            `;
+
+            console.log(
+                "No weather alerts for:",
+                selectedCity
+            );
+
+            return;
+        }
 
 
-                            <p>
-                                ${alert.message}
-                            </p>
+        /* =================================================
+           CREATE ALERT CARDS
+           ================================================= */
+
+        alerts.forEach(function(alert) {
+
+            const type =
+                alert.type || "Weather Alert";
 
 
-                            <small>
-                                Today • ${data.city}
-                            </small>
+            const severity =
+                alert.severity || "Information";
 
-                        </div>
+
+            const message =
+                alert.message ||
+                "Weather conditions require attention.";
+
+
+            const icon =
+                getAlertIcon(type);
+
+
+            const cardClass =
+                getAlertClass(severity);
+
+
+            const alertHTML = `
+
+                <div
+                    class="alert-card ${cardClass}"
+                >
+
+                    <div class="alert-icon">
+
+                        ${icon}
 
                     </div>
 
-                `;
+
+                    <div class="alert-content">
+
+                        <div class="alert-heading">
+
+                            <h3>
+                                ${type}
+                            </h3>
+
+                            <span>
+                                ${severity}
+                            </span>
+
+                        </div>
 
 
-                container.innerHTML +=
+                        <p>
+                            ${message}
+                        </p>
 
-                    alertHTML;
 
-            }
+                        <small>
+                            Today • ${data.city || selectedCity}
+                        </small>
 
+                    </div>
+
+                </div>
+
+            `;
+
+
+            container.insertAdjacentHTML(
+                "beforeend",
+                alertHTML
+            );
+
+        });
+
+
+        /* =================================================
+           UPDATE ALL-CLEAR MESSAGE
+           ================================================= */
+
+        const allClear =
+            document.querySelector(".all-clear");
+
+
+        if (allClear) {
+
+            /*
+             * A real alert exists, so the
+             * "No other major alerts" message
+             * should not be shown.
+             */
+
+            allClear.style.display = "none";
+
+        }
+
+
+        console.log(
+            "Alerts loaded successfully for:",
+            data.city || selectedCity
         );
 
+    }
 
-    } catch (error) {
+
+    /* =====================================================
+       ERROR HANDLING
+       ===================================================== */
+
+    catch (error) {
 
         console.error(
             "Alerts loading error:",
@@ -159,21 +351,78 @@ async function loadAlerts(city = "Kolkata") {
         );
 
 
-        document.getElementById(
-            "alertsContainer"
-        ).innerHTML = `
+        container.innerHTML = `
 
-            <p>
-                Unable to load weather alerts.
-            </p>
+            <div
+                class="alert-card caution"
+            >
+
+                <div class="alert-icon">
+                    ⚠️
+                </div>
+
+
+                <div class="alert-content">
+
+                    <div class="alert-heading">
+
+                        <h3>
+                            Unable to load alerts
+                        </h3>
+
+                    </div>
+
+
+                    <p>
+                        We could not retrieve weather
+                        alerts for ${selectedCity}.
+                        Please try again.
+                    </p>
+
+                </div>
+
+            </div>
 
         `;
+
+
+        /* Hide the static all-clear message */
+
+        const allClear =
+            document.querySelector(".all-clear");
+
+
+        if (allClear) {
+
+            allClear.style.display = "none";
+
+        }
 
     }
 
 }
 
 
-/* LOAD ALERTS WHEN PAGE OPENS */
+/* =========================================================
+   PAGE LOAD
+   ========================================================= */
 
-loadAlerts();
+/*
+ * Read the city selected on the Home page.
+ *
+ * If no city has been selected yet,
+ * Kolkata will be used.
+ */
+
+const savedCity =
+    localStorage.getItem("selectedCity") ||
+    "Kolkata";
+
+
+console.log(
+    "Alerts page city:",
+    savedCity
+);
+
+
+loadAlerts(savedCity);

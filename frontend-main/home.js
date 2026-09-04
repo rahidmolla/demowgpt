@@ -107,7 +107,7 @@ async function generateWeatherResponse(question) {
     try {
 
         const response = await fetch(
-            "http://127.0.0.1:8000/api/weather/",
+            "https://demowgpt.onrender.com/api/weather/",
             {
                 method: "POST",
 
@@ -351,7 +351,7 @@ document
     try {
 
         const response = await fetch(
-            "http://127.0.0.1:8000/api/weather/",
+            "https://demowgpt.onrender.com/api/weather/",
             {
                 method: "POST",
 
@@ -424,7 +424,7 @@ document
 
 
         document
-            .getElementById("weatherCondition")
+            .getElementById("weather-condition")
             .textContent =
             data.description;
 
