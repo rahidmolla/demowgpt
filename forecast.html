@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>10 Day Forecast - WeatherGPT</title>
+
+    <link
+        rel="stylesheet"
+        href="forecast.css"
+    >
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <header class="forecast-header">
+
+        <button
+            onclick="goHome()"
+            class="back-btn"
+        >
+            ←
+        </button>
+
+        <div>
+            <h1>10 Day Forecast</h1>
+
+            <p id="forecastCity" title="Tap to change location" style="cursor:pointer; text-decoration:underline;">📍 Loading...</p>
+        </div>
+
+    </header>
+
+
+    <!-- CURRENT WEATHER -->
+
+    <section class="current-summary">
+
+        <div>
+
+            <p id="todayLabel">Today</p>
+
+            <h2 id="forecastTodayTemperature">--°C</h2>
+
+            <span id="forecastCondition">Loading...</span>
+
+        </div>
+
+        <div class="big-icon" id="forecastTodayIcon">
+            ⛅
+        </div>
+
+    </section>
+
+
+    <!-- FORECAST LIST -->
+
+    <section class="forecast-list">
+
+        <div class="forecast-title">
+            <h2>Upcoming Days</h2>
+        </div>
+
+        <!-- Forecast day cards are inserted here dynamically by forecast.js -->
+        <div id="forecastContainer">
+            <p id="forecastStatus" style="text-align:center; color:#888; padding:20px 0;">
+                Loading forecast...
+            </p>
+        </div>
+
+    </section>
+
+
+    <!-- BOTTOM NAV -->
+
+    <nav class="bottom-nav">
+
+        <button onclick="goHome()">
+            <span>🏠</span>
+            <small>Home</small>
+        </button>
+
+        <button class="active">
+            <span>📅</span>
+            <small>Forecast</small>
+        </button>
+
+        <button onclick="goAlerts()">
+            <span>⚠️</span>
+            <small>Alerts</small>
+        </button>
+
+        <button onclick="goProfile()">
+    <span>👤</span>
+    <small>Profile</small>
+</button>
+
+    </nav>
+
+</div>
+
+
+<script src="forecast.js"></script>
+
+</body>
+
+</html>

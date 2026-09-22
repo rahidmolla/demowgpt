@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Profile - WeatherGPT</title>
+
+    <link rel="stylesheet" href="profile.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <header class="profile-header">
+
+        <button
+            onclick="goHome()"
+            class="back-btn"
+        >
+            ←
+        </button>
+
+        <div>
+
+            <h1>My Profile</h1>
+
+            <p>Manage your WeatherGPT account</p>
+
+        </div>
+
+    </header>
+
+
+    <!-- PROFILE CARD -->
+
+    <section class="profile-card">
+
+        <div class="profile-avatar">
+            👤
+        </div>
+
+        <h2 id="profileName">
+            User
+        </h2>
+
+        <p id="profileEmail">
+            user@email.com
+        </p>
+
+    </section>
+
+
+    <!-- SETTINGS -->
+
+    <section class="settings">
+
+        <h2>Weather Preferences</h2>
+
+
+        <div class="setting-card">
+
+            <span>📍</span>
+
+            <div>
+
+                <p class="setting-title">
+                    Preferred City
+                </p>
+
+                <p class="setting-description">
+                    Choose your default weather location
+                </p>
+
+            </div>
+
+            <input
+                type="text"
+                id="preferredCity"
+                placeholder="Enter city"
+            >
+
+        </div>
+
+
+        <button
+            id="saveProfileBtn"
+            class="save-btn"
+        >
+            Save Preferences
+        </button>
+
+        <p id="profileMessage"></p>
+
+    </section>
+
+
+    <!-- LOGOUT -->
+
+    <section class="logout-section">
+
+        <button
+            onclick="logout()"
+            class="logout-btn"
+        >
+            🚪 Logout
+        </button>
+
+    </section>
+
+
+    <!-- BOTTOM NAVIGATION -->
+
+    <nav class="bottom-nav">
+
+        <button onclick="goHome()">
+
+            <span>🏠</span>
+
+            <small>Home</small>
+
+        </button>
+
+
+        <button onclick="goForecast()">
+
+            <span>📅</span>
+
+            <small>Forecast</small>
+
+        </button>
+
+
+        <button onclick="goAlerts()">
+
+            <span>⚠️</span>
+
+            <small>Alerts</small>
+
+        </button>
+
+
+        <button class="active">
+
+            <span>👤</span>
+
+            <small>Profile</small>
+
+        </button>
+
+    </nav>
+
+</div>
+
+<script src="profile.js"></script>
+
+</body>
+</html>

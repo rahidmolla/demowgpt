@@ -1,0 +1,460 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #eaf8ff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.app {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    min-height: 100vh;
+    padding-bottom: 100px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.forecast-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 20px 24px;
+
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        #2196f3,
+        #00c6ff
+    );
+
+    border-radius: 0 0 30px 30px;
+}
+
+.forecast-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.forecast-header p {
+    font-size: 14px;
+    margin-top: 6px;
+    opacity: 0.95;
+}
+
+.back-btn {
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.20);
+
+    color: white;
+    font-size: 27px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   TODAY SUMMARY
+========================= */
+
+.current-summary {
+    margin: 18px 22px 28px;
+
+    padding: 22px 24px;
+
+    min-height: 115px;
+
+    background: linear-gradient(
+        135deg,
+        #42b6ef,
+        #0bd9dc
+    );
+
+    color: white;
+
+    border-radius: 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.current-summary p {
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.current-summary h2 {
+    font-size: 39px;
+    line-height: 1.1;
+    margin: 3px 0 5px;
+}
+
+.current-summary span {
+    font-size: 14px;
+}
+
+.big-icon {
+    font-size: 65px;
+    line-height: 1;
+}
+
+
+/* =========================
+   UPCOMING DAYS
+========================= */
+
+.forecast-list {
+    margin: 0 22px;
+}
+
+.forecast-title {
+    margin-bottom: 20px;
+}
+
+.forecast-title h2 {
+    font-size: 25px;
+    font-weight: 700;
+    color: #111;
+}
+
+
+/* =========================
+   FORECAST CARD
+========================= */
+
+.forecast-day {
+    width: 100%;
+
+    min-height: 92px;
+
+    background: white;
+
+    border-radius: 28px;
+
+    padding: 15px 20px;
+
+    margin-bottom: 16px;
+
+    display: grid;
+
+    grid-template-columns:
+        90px
+        65px
+        1fr
+        90px;
+
+    align-items: center;
+
+    gap: 10px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.04);
+}
+
+
+/* DAY + DATE */
+
+.day {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.day strong {
+    font-size: 18px;
+    color: #111;
+}
+
+.day small {
+    font-size: 16px;
+    color: #888;
+}
+
+
+/* WEATHER ICON */
+
+.forecast-icon {
+    font-size: 40px;
+    line-height: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* CONDITION */
+
+.condition {
+    font-size: 17px;
+    color: #666;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* TEMPERATURES */
+
+.temps {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+
+    gap: 6px;
+}
+
+.temps strong {
+    font-size: 21px;
+    color: #111;
+}
+
+.temps span {
+    font-size: 18px;
+    color: #999;
+}
+
+
+/* =========================
+   BOTTOM NAVIGATION
+========================= */
+
+.bottom-nav {
+    position: fixed;
+
+    bottom: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+    max-width: 700px;
+
+    background: white;
+
+    padding: 13px 10px 12px;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    box-shadow:
+        0 -5px 25px rgba(0,0,0,0.08);
+
+    border-radius: 28px 28px 0 0;
+
+    z-index: 100;
+}
+
+.bottom-nav button {
+    border: none;
+    background: transparent;
+
+    color: #777;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 4px;
+
+    padding: 4px 20px;
+}
+
+.bottom-nav span {
+    font-size: 28px;
+    line-height: 1;
+}
+
+.bottom-nav small {
+    font-size: 13px;
+}
+
+.bottom-nav .active {
+    color: #2196f3;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .app {
+        max-width: 100%;
+    }
+
+    .forecast-header {
+        padding: 18px 22px;
+    }
+
+    .forecast-header h1 {
+        font-size: 22px;
+    }
+
+    .forecast-header p {
+        font-size: 13px;
+    }
+
+    .current-summary {
+        margin: 16px 22px 28px;
+        padding: 20px;
+        min-height: 110px;
+    }
+
+    .current-summary h2 {
+        font-size: 37px;
+    }
+
+    .big-icon {
+        font-size: 58px;
+    }
+
+    .forecast-list {
+        margin: 0 22px;
+    }
+
+    .forecast-title h2 {
+        font-size: 24px;
+    }
+
+    .forecast-day {
+        min-height: 92px;
+
+        padding: 14px 18px;
+
+        border-radius: 27px;
+
+        grid-template-columns:
+            75px
+            55px
+            1fr
+            75px;
+
+        gap: 7px;
+    }
+
+    .day strong {
+        font-size: 17px;
+    }
+
+    .day small {
+        font-size: 15px;
+    }
+
+    .forecast-icon {
+        font-size: 34px;
+    }
+
+    .condition {
+        font-size: 15px;
+    }
+
+    .temps {
+        gap: 4px;
+    }
+
+    .temps strong {
+        font-size: 19px;
+    }
+
+    .temps span {
+        font-size: 16px;
+    }
+
+    .bottom-nav {
+        max-width: 100%;
+        padding: 12px 5px;
+    }
+
+    .bottom-nav button {
+        padding: 4px 12px;
+    }
+
+    .bottom-nav span {
+        font-size: 25px;
+    }
+
+    .bottom-nav small {
+        font-size: 12px;
+    }
+}
+
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media (max-width: 380px) {
+
+    .current-summary {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+
+    .forecast-list {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+
+    .forecast-day {
+        padding: 13px 14px;
+
+        grid-template-columns:
+            65px
+            48px
+            1fr
+            65px;
+
+        gap: 5px;
+    }
+
+    .day strong {
+        font-size: 15px;
+    }
+
+    .day small {
+        font-size: 13px;
+    }
+
+    .forecast-icon {
+        font-size: 30px;
+    }
+
+    .condition {
+        font-size: 13px;
+    }
+
+    .temps strong {
+        font-size: 17px;
+    }
+
+    .temps span {
+        font-size: 14px;
+    }
+
+    .bottom-nav button {
+        padding: 4px 7px;
+    }
+}
